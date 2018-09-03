@@ -6,6 +6,8 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.RectF
+import android.os.Bundle
+import android.os.Parcelable
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
@@ -36,6 +38,8 @@ class EmoView(
 
   private var borderWidth = 4.0f
   private var size = 320
+
+  private val mouthPath: Path = Path()
 
   var mood = HAPPY
     set(state) {
@@ -75,6 +79,20 @@ class EmoView(
     setMeasuredDimension(size, size)
   }
 
+  override fun onSaveInstanceState(): Parcelable {
+    return Bundle().apply {
+      putLong("mood", mood)
+      putParcelable("super", super.onSaveInstanceState())
+    }
+  }
+
+  override fun onRestoreInstanceState(state: Parcelable) {
+    (state as Bundle).apply {
+      mood = getLong("mood")
+      super.onRestoreInstanceState(getParcelable("super"))
+    }
+  }
+
   private fun drawSmiley(canvas: Canvas) {
     val (cx, cy, radius) = Triple(size / 2f, size / 2f, size / 2f)
 
@@ -112,10 +130,18 @@ class EmoView(
       color = mouthColor
       style = Paint.Style.FILL
 
-      val mouthPath = Path().apply {
-        moveTo(size * 0.22f, size * 0.6f)
-        quadTo(size * 0.50f, size * 0.80f, size * 0.78f, size * 0.60f)
-        quadTo(size * 0.50f, size * 0.90f, size * 0.22f, size * 0.60f)
+      mouthPath.apply {
+        reset()
+
+        if (mood == HAPPY) {
+          moveTo(size * 0.22f, size * 0.6f)
+          quadTo(size * 0.50f, size * 0.80f, size * 0.78f, size * 0.60f)
+          quadTo(size * 0.50f, size * 0.90f, size * 0.22f, size * 0.60f)
+        } else {
+          moveTo(size * 0.22f, size * 0.7f)
+          quadTo(size * 0.50f, size * 0.50f, size * 0.78f, size * 0.70f)
+          quadTo(size * 0.50f, size * 0.60f, size * 0.22f, size * 0.7f)
+        }
       }
 
       canvas.drawPath(mouthPath, this)

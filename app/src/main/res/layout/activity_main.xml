@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,26 +9,69 @@
     >
 
   <TextView
-      android:id="@+id/textView"
+      android:id="@+id/titleView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="8dp"
+      android:layout_marginStart="8dp"
+      android:layout_marginTop="64dp"
+      android:text="@string/are_you_satisfied"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      />
+
+  <TextView
+      android:id="@+id/feedBack"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_centerHorizontal="true"
-      android:text="Hello World!"
+      android:layout_marginTop="4dp"
+      app:layout_constraintEnd_toEndOf="@+id/titleView"
+      app:layout_constraintStart_toStartOf="@+id/titleView"
+      app:layout_constraintTop_toBottomOf="@+id/titleView"
+      tools:text="Happy"
+      style="@style/Base.TextAppearance.AppCompat.Large"
       />
 
   <com.example.kotlincustomviewsample.view.EmoView
-      android:id="@+id/emotionalFaceView"
+      android:id="@+id/emoHappyView"
       android:layout_width="100dp"
       android:layout_height="100dp"
-      android:layout_below="@id/textView"
+      android:layout_below="@id/feedBack"
       android:layout_centerInParent="true"
-      android:layout_marginTop="16dp"
+      android:layout_marginStart="8dp"
+      android:layout_marginTop="64dp"
       app:borderColor="@android:color/black"
       app:borderWidth="4dp"
       app:eyesColor="@android:color/black"
       app:faceColor="@color/colorPrimary"
+      app:layout_constraintEnd_toStartOf="@+id/emoSadView"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/feedBack"
       app:mood="happy"
       app:mouthColor="@android:color/black"
       />
 
-</RelativeLayout>
+  <com.example.kotlincustomviewsample.view.EmoView
+      android:id="@+id/emoSadView"
+      android:layout_width="100dp"
+      android:layout_height="100dp"
+      android:layout_below="@id/emoHappyView"
+      android:layout_centerInParent="true"
+      android:layout_marginEnd="8dp"
+      android:layout_marginStart="8dp"
+      app:borderColor="@android:color/white"
+      app:borderWidth="4dp"
+      app:eyesColor="@android:color/white"
+      app:faceColor="@color/colorAccent"
+      app:layout_constraintBottom_toBottomOf="@+id/emoHappyView"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toEndOf="@+id/emoHappyView"
+      app:layout_constraintTop_toTopOf="@+id/emoHappyView"
+      app:mood="sad"
+      app:mouthColor="@android:color/white"
+      />
+</androidx.constraintlayout.widget.ConstraintLayout>

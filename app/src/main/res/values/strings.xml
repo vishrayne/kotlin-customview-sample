@@ -1,3 +1,4 @@
 <resources>
   <string name="app_name">kotlin-customview-sample</string>
+  <string name="are_you_satisfied">Are you satisfied?</string>
 </resources>
