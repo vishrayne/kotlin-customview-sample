@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <declare-styleable name="EmotionalFaceView">
+    <attr format="color" name="faceColor"/>
+    <attr format="color" name="eyesColor"/>
+    <attr format="color" name="mouthColor"/>
+    <attr format="color" name="borderColor"/>
+    <attr format="dimension" name="borderWidth"/>
+    <attr format="enum" name="mood">
+      <enum name="happy" value="0"/>
+      <enum name="sad" value="1"/>
+    </attr>
+  </declare-styleable>
+</resources>

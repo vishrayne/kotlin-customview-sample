@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    >
+
+  <TextView
+      android:id="@+id/textView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerHorizontal="true"
+      android:text="Hello World!"
+      />
+
+  <com.example.kotlincustomviewsample.view.EmoView
+      android:id="@+id/emotionalFaceView"
+      android:layout_width="100dp"
+      android:layout_height="100dp"
+      android:layout_below="@id/textView"
+      android:layout_centerInParent="true"
+      android:layout_marginTop="16dp"
+      app:borderColor="@android:color/black"
+      app:borderWidth="4dp"
+      app:eyesColor="@android:color/black"
+      app:faceColor="@color/colorPrimary"
+      app:mood="happy"
+      app:mouthColor="@android:color/black"
+      />
+
+</RelativeLayout>
