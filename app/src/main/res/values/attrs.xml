@@ -5,6 +5,11 @@
     <attr format="color" name="eyesColor"/>
     <attr format="color" name="mouthColor"/>
     <attr format="color" name="borderColor"/>
+    <!-- Toggle colors -->
+    <attr format="color" name="faceToggleColor"/>
+    <attr format="color" name="borderToggleColor"/>
+    <attr format="color" name="eyesToggleColor"/>
+    <attr format="color" name="mouthToggleColor"/>
     <attr format="dimension" name="borderWidth"/>
     <attr format="enum" name="mood">
       <enum name="happy" value="0"/>

@@ -1,10 +1,8 @@
 package com.example.kotlincustomviewsample
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.emoHappyView
 import kotlinx.android.synthetic.main.activity_main.emoSadView
 import kotlinx.android.synthetic.main.activity_main.feedBack
