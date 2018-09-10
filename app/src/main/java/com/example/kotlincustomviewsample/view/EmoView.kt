@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.util.AttributeSet
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import com.example.kotlincustomviewsample.R
 
@@ -31,10 +32,22 @@ class EmoView(
   }
 
   private val paint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+  private var faceToggleColor = Color.YELLOW
+  private var mouthToggleColor = Color.YELLOW
+  private var eyesToggleColor = Color.YELLOW
+  private var borderToggleColor = Color.YELLOW
+
   private var faceColor = Color.YELLOW
   private var eyesColor = Color.BLACK
   private var mouthColor = Color.BLACK
   private var borderColor = Color.BLACK
+
+  private var facePaintColor = DEFAULT_FACE_COLOR
+  private var mouthPaintColor = DEFAULT_MOUTH_COLOR
+  private var borderPaintColor = DEFAULT_BORDER_COLOR
+  private var eyesPaintColor = DEFAULT_EYES_COLOR
+
+  private var isToggled = true
 
   private var borderWidth = 4.0f
   private var size = 320
@@ -56,10 +69,43 @@ class EmoView(
           eyesColor = getColor(R.styleable.EmotionalFaceView_eyesColor, DEFAULT_EYES_COLOR)
           mouthColor = getColor(R.styleable.EmotionalFaceView_mouthColor, DEFAULT_MOUTH_COLOR)
           borderColor = getColor(R.styleable.EmotionalFaceView_borderColor, DEFAULT_BORDER_COLOR)
+
+          mouthToggleColor = getColor(R.styleable.EmotionalFaceView_mouthToggleColor, mouthColor)
+          eyesToggleColor = getColor(R.styleable.EmotionalFaceView_eyesToggleColor, eyesColor)
+          borderToggleColor = getColor(R.styleable.EmotionalFaceView_borderToggleColor, borderColor)
+          faceToggleColor = getColor(R.styleable.EmotionalFaceView_faceToggleColor, faceColor)
+
           borderWidth =
               getDimension(R.styleable.EmotionalFaceView_borderWidth, DEFAULT_BORDER_WIDTH)
+          assignViewPaintColors()
         }
         .recycle()
+  }
+
+  private fun assignViewPaintColors() {
+    facePaintColor = faceColor
+    mouthPaintColor = mouthColor
+    borderPaintColor = borderColor
+    eyesPaintColor = eyesColor
+  }
+
+  override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+    when (event.action) {
+      MotionEvent.ACTION_UP -> {
+        Log.d("touch", "$event")
+        toggleAllColors()
+      }
+    }
+    return super.dispatchTouchEvent(event)
+  }
+
+  private fun toggleAllColors() {
+    facePaintColor = if (isToggled) faceToggleColor else faceColor
+    borderPaintColor = if (isToggled) borderToggleColor else borderColor
+    mouthPaintColor = if (isToggled) mouthToggleColor else mouthColor
+    eyesPaintColor = if (isToggled) eyesToggleColor else eyesColor
+    isToggled = !isToggled
+    invalidate()
   }
 
   override fun onDraw(canvas: Canvas) {
@@ -73,7 +119,6 @@ class EmoView(
     heightMeasureSpec: Int
   ) {
     super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-
     size = Math.min(measuredWidth, measuredHeight)
     Log.d("EmotionalFV", "Measured min width|height [square]-> $size")
     setMeasuredDimension(size, size)
