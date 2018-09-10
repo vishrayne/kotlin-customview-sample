@@ -14,7 +14,7 @@ import android.view.View
 import com.example.kotlincustomviewsample.R
 
 /**
- * Created by vishnu on 3/9/18.
+ * Custom EmoView class
  */
 class EmoView(
   context: Context,
@@ -95,25 +95,47 @@ class EmoView(
 
   private fun drawSmiley(canvas: Canvas) {
     val (cx, cy, radius) = Triple(size / 2f, size / 2f, size / 2f)
+    drawFace(canvas, cx, cy, radius, facePaintColor)
+    drawBorder(canvas, cx, cy, radius, borderPaintColor)
+    drawEyes(canvas, eyesPaintColor)
+    drawMouth(canvas, mouthPaintColor)
+  }
 
-    // face
+  private fun drawFace(
+    canvas: Canvas,
+    cx: Float,
+    cy: Float,
+    radius: Float,
+    itemColor: Int
+  ) {
     paint.apply {
-      color = faceColor
+      color = itemColor
       style = Paint.Style.FILL
       canvas.drawCircle(cx, cy, radius, this)
     }
+  }
 
-    // border
+  private fun drawBorder(
+    canvas: Canvas,
+    cx: Float,
+    cy: Float,
+    radius: Float,
+    itemColor: Int
+  ) {
     paint.apply {
-      color = borderColor
+      color = itemColor
       style = Paint.Style.STROKE
       strokeWidth = borderWidth
       canvas.drawCircle(cx, cy, radius - borderWidth, this)
     }
+  }
 
-    // eyes
+  private fun drawEyes(
+    canvas: Canvas,
+    itemColor: Int
+  ) {
     paint.apply {
-      color = eyesColor
+      color = itemColor
       style = Paint.Style.FILL
 
       RectF(size * 0.32f, size * 0.33f, size * 0.43f, size * 0.50f).let { lRect ->
@@ -124,27 +146,35 @@ class EmoView(
         canvas.drawOval(rRect, this)
       }
     }
+  }
 
-    // mouth
+  private fun drawMouth(
+    canvas: Canvas,
+    itemColor: Int
+  ) {
     paint.apply {
-      color = mouthColor
+      color = itemColor
       style = Paint.Style.FILL
-
       mouthPath.apply {
         reset()
-
-        if (mood == HAPPY) {
-          moveTo(size * 0.22f, size * 0.6f)
-          quadTo(size * 0.50f, size * 0.80f, size * 0.78f, size * 0.60f)
-          quadTo(size * 0.50f, size * 0.90f, size * 0.22f, size * 0.60f)
-        } else {
-          moveTo(size * 0.22f, size * 0.7f)
-          quadTo(size * 0.50f, size * 0.50f, size * 0.78f, size * 0.70f)
-          quadTo(size * 0.50f, size * 0.60f, size * 0.22f, size * 0.7f)
+        when (mood) {
+          HAPPY -> drawHappyPath()
+          else -> drawSadPath()
         }
       }
-
       canvas.drawPath(mouthPath, this)
     }
+  }
+
+  private fun Path.drawSadPath() {
+    moveTo(size * 0.22f, size * 0.7f)
+    quadTo(size * 0.50f, size * 0.50f, size * 0.78f, size * 0.70f)
+    quadTo(size * 0.50f, size * 0.60f, size * 0.22f, size * 0.7f)
+  }
+
+  private fun Path.drawHappyPath() {
+    moveTo(size * 0.22f, size * 0.6f)
+    quadTo(size * 0.50f, size * 0.80f, size * 0.78f, size * 0.60f)
+    quadTo(size * 0.50f, size * 0.90f, size * 0.22f, size * 0.60f)
   }
 }
